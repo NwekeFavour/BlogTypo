@@ -1,0 +1,27 @@
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<div>
+    <div class="text-center">
+        <h1>Articles</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <% blog.forEach(posts=> { %>
+                <div class="col-lg-6 col-md-4 mb-4">
+                    <div class="card">
+                        <img src="<%= posts.image %>" class="card-img-top" width="300" height="300" alt="daveXslawn">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= posts.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= posts.content %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
