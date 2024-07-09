@@ -1,0 +1,16 @@
+.list-unstyled li a{
+    color: #292929;
+}
+
+.display {
+    display: block !important;
+}
+
+
+.navigate{
+    background-color: #944117 !important;
+}
+
+.Post{
+    right: 20px !important;
+}

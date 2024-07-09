@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
-// const multer = require('multer');
-// const fs = require('fs')
+const multer = require('multer');
+const path = require('path')
+const fs = require('fs');
+const authenticateToken = require('./auth');
 
 // const upload = multer({ dest: '/uploads'})
 
@@ -39,14 +41,20 @@ const Post = require('../models/post');
 // insertPost();
 
 router.get('/post', (req, res) => {
-    res.render('post');
+    const text = {
+        title: "upload"
+    }
+    res.render('post', {text});
 })
 
 router.get('/blogs', async (req, res) => {
+    const text = {
+        title: "blog"
+    }
     
     try {
         const blog = await Post.find();
-        res.render('blog', {blog});
+        res.render('blog', {blog, text});
         
     } catch (error) {
         console.log(error);
@@ -54,40 +62,103 @@ router.get('/blogs', async (req, res) => {
     
 })
 
-router.post('/upload', async (req, res) => {
-    const blog = new Post(req.body)
-    blog.save()
+router.get('/dashboard', authenticateToken, async (req, res) => {
+    try {
+        const blog = await Post.find();
+        res.render('dashboard', {layout: 'layouts/admin', blog} );
+        
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+// router.post('/upload',  (req, res) => {
+//     const blog = new Post(req.body);
+
+//     blog.save()
+//     .then((result) => {
+//         res.redirect('/');
+//     }).catch((err) => {
+//         console.log(err);
+//     });
+// })
+
+
+
+const storage = multer.diskStorage({
+    destination: './servers/routes/uploads/',
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+    
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 2000000 } // 2MB file size limit
+}).single('image');
+
+router.post('/upload', (req, res) => {
+
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ message: 'File upload error', error: err.message });
+        }
+
+        try {
+            const { title, description } = req.body;
+            if (!req.file) {
+                return res.status(400).json({ message: 'File is required' });
+            }
+
+            const image = {
+                data: fs.readFileSync(path.join(__dirname, 'uploads', req.file.filename)).toString('base64'),
+                contentType: req.file.mimetype
+            };
+
+            const blog = new Post({
+                title,
+                description,
+                image
+            });
+
+            await blog.save(); 
+            res.redirect('/blogs');
+
+        } catch (error) {
+            console.error('Error while saving post:', error);
+            res.status(500).json({ message: 'An error occurred while saving the post', error: error.message });
+        }
+    });
+});
+
+
+router.get('/blogs/:id', (req, res) => {
+    const text = {
+        title: "article"
+    }
+    const id = req.params.id
+    Post.findById(id)
     .then((result) => {
-        res.redirect('/')
+        res.render('details', {post : result, text});
     }).catch((err) => {
-        console.log(err)
+        console.log(err);
     });
 })
 
-// router.post('/upload',
-//     upload.single('image'),
-//     async (req, res) => {
-//         try {
-//             const { title, description } = req.body;
-//             const imageBuffer = fs.readFileSync(req.file.path);
-
-            
-//             const blog = new Post({
-//                 title,
-//                 description,
-//                 image: imageBuffer,
-//                 imageType
-//             });
-//              await blog.save()
-                
-//         } catch (error) {
-//             console.log(error);
-//         }
-
-// }) 
 
 
-
-
+router.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id
+    Post.findByIdAndDelete(id)
+    .then((result) => {
+        res.json({redirect: '/'});
+    }).catch((err) => {
+        console.log(err);
+    });
+})
 
 module.exports = router;
+
+ 

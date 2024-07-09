@@ -5,17 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="/css/">
+    <link rel="stylesheet" type="text/css" href="/css/dashboard/dash.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Traditional+Nushu:wght@300..700&display=swap"
+        rel="stylesheet">
+    <script src="/js/bootstrap.bundle.js" defer></script>
+    <script src="/js/logout.js" defer></script>
 </head>
 
 <body>
     <div>
-        <div>
-            <%- include('../partials/header.ejs') %>
+        <div class="container-fluid ">
+            <div class="row vh-100">
+                <div class="col-lg-3 d-lg-block d-none navigate">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="/images/shfl3.png" width="100" height="100" alt="">
+                    </div>
+                    <div class="d-lg-block d-none my-lg-5">
+                        <div>
+                            <ul class="list-unstyled text-center fs-5">
+                                <li>
+                                    <a class="text-light text-decoration-none" href="#">Home</a>
+                                </li>
+                                <li>
+                                    <a class="text-light text-decoration-none" href="#"></a>
+                                </li>
+                                <li>
+                                    <a class="text-light text-decoration-none" href="#">Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="col-lg-9  bg-white">
+                    <div class="d-flex align-items-center m-3 justify-content-between">
+                        <div class="d-lg-none d-block">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                                aria-controls="offcanvasScrolling">Enable body scrolling</button>
+                            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+                                id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <p>Try scrolling the rest of the page to see this option in action.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="m-0">Dashboard</p>
+                        </div>
+                        <div>
+                            <a href="/home">Go to Home</a>
+                        </div>
+                        <div>
+                            <a id="logoutButton"  class="btn btn-danger" role="button">Log out</a>
+                        </div>
+                        <div class="modal" tabindex="-1" id="exampleModel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-danger">Log Out</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!-- if user clicks on NO  stay on page -->
+                                    <div class="modal-body">
+                                        <p class="text-secondary">Are you sure you want to log out?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="closebtn" class="btn btn-close-white text-danger" data-bs-dismiss="modal">Yes</button>
+                                        <button type="button" class="btn btn-primary" id="stayLogged">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div>
+                            <%- body %>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <%- body %>
-    </div>
+    </div>   
 </body>
-
 </html>

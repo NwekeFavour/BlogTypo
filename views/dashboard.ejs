@@ -1,0 +1,48 @@
+<div>
+<% if (blog.length> 0) { %>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody class="">
+        <% blog.forEach((posts, index)=> { %>
+                <tr>
+                    <th scope="row">
+                        <%= index + 1 %>
+                    </th>
+                        <td class="text-capitalize">
+                            <a href="/blogs/<%= posts._id %>">
+                                <%= posts.title %>
+                            </a>
+                        </td>
+                    <td colspan="2">
+                        <%= posts.createdAt.toDateString() %>
+                    </td>
+                    <td colspan="2">
+                        <button type="button" class="btn p-0" data-boc="<%= posts._id %>" id="delete">
+                            <i class="text-danger fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+        <% }) %>
+            </tbody>
+        </table>
+            <% } else { %>
+            <div class="text-center">
+                <div>
+                    <h4>It seems you do not have a post yet!...</h4>
+                </div>
+                <div class="btn btn-primary">
+                    <a class="text-decoration-none text-light text-capitalize" href="/post">create post</a>
+                </div>
+            </div>
+                
+<% } %>
+        <div class="btn btn-primary position-absolute end-0 Post">
+            <a class="text-decoration-none text-light text-capitalize" href="/post">create post</a>
+        </div>
+</div>

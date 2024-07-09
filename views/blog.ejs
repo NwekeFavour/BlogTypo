@@ -1,7 +1,8 @@
+
 <head>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+<!-- if adimin doesn't have post what should happen -->
 <div>
     <div class="text-center">
         <h1>Articles</h1>
@@ -9,9 +10,10 @@
     <div class="container">
         <div class="row">
             <% blog.forEach(posts=> { %>
-                <div class="col-lg-6 col-md-4 mb-4">
-                    <div class="card">
-                        <img src="<%= posts.image %>" class="card-img-top" width="300" height="300" alt="daveXslawn">
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <div class="card  border-0">
+                        <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>"
+                            class="card-img-top" width="300" height="300" />
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= posts.title %>
@@ -22,6 +24,6 @@
                         </div>
                     </div>
                 </div>
-                <% }) %>
+            <% }) %>
         </div>
     </div>

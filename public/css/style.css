@@ -6,10 +6,17 @@
     --opacity-header: 100%;
 }
 
-
-.link{
-    margin-right: 50px !important;
+body{
+    font-family: "Noto Traditional Nushu", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
+
+
+/* .link{
+    margin-right: 50px !important;
+} */
 
 .link li a{
     text-decoration: var(--link-styles);
@@ -66,25 +73,29 @@
      color: #b8b7b7 !important;
  }
 
-  .shuffle_dave {
-      background-image: url(/images//Home/backdrop.png);
-      width: 400px !important;
-      height: 400px !important;
-      background-repeat: no-repeat;
-      background-size: contain;
-      color: transparent !important;
-      transition: opacity 0.3s ease-in-out;
-      z-index: 1 !important;
-  }
+.trending h2{
+    font-size: 38px;
+    width: 300px !important;
+}
 
-  .shuffle_dave:hover{
-      opacity: 50%;
-     background-color: rgba(0, 0, 0, 0.5);
-     color: #b8b7b7 !important;
-  }
-
+.trending .uncover p{
+    font-size: 18px;
+}
   .title h3{
     font-size: 50px;
+  }
+
+  .arrow i {
+    color: var(--bg-color);
+  }
+
+  .Pr p{
+    color: var(--bg-color);
+  }
+
+  .navbar-nav ul a {
+    font-weight: 500;
+    font-size: 17px;
   }
 
 
@@ -123,7 +134,14 @@
      margin-top: 40px;
      height: 300px !important;
  }
+ .LLonaSpotify img {
+    width: 300px !important;
+    height: 280px ;
  }
+
+
+
+}
 
 
  @media screen and (max-width:321px) {
@@ -141,4 +159,15 @@
         height: 250px;
      }
 
+ }
+
+ @media screen and (min-width: 1024px) {
+    .navbar-nav {
+            width: 300px !important;
+            margin: 0 auto !important;
+        }
+        .headline img{
+            width: 170px;
+            height: 130px;
+        }
  }
