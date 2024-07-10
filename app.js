@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
  
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
   
 
 app.get('/', function (req, res) {
