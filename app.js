@@ -2,7 +2,7 @@ require('dotenv').config();
 const { URL } = require('whatwg-url');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const connectDB = require('../servers/config/db');
+const connectDB = require('./servers/config/db');
 const app = express();
 const cookieParser = require('cookie-parser')
 
@@ -26,8 +26,8 @@ app.use((req, res, next) => {
 app.use("/", express.static('./node_modules/bootstrap/dist/'));
 app.set('layout', './layouts/main');
 
-app.use('/', require('../servers/routes/main'));
-app.use('/', require('../servers/routes/post'));
+app.use('/', require('./servers/routes/main'));
+app.use('/', require('./servers/routes/post'));
 
 app.use((req, res, next) => { 
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -41,7 +41,7 @@ app.set('view engine', 'ejs');
  
 
 const PORT = process.env.PORT || 3000;
- 
+  
 
 app.get('/', function (req, res) {
     res.send('Hello World');

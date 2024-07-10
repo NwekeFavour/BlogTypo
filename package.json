@@ -6,8 +6,9 @@
     "node": "20.x"
   },
   "scripts": {
-    "start": "node api/app.js",
-    "dev": "nodemon api/app.js"
+    "start": "node app.js",
+    "build": "echo 'No build step required' && exit 0"
+
   },
   "keywords": [],
   "author": "",
