@@ -12,8 +12,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 app.use(express.static('public'));
+
+
+
+app.use((req, res, next) => {
+    res.header('Content-Security-Policy', "default-src 'self'; script-src 'self' https://vercel.live");
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Pragma', 'no-cache');
+    res.header('Expires', '-1');
+    next();
+});
+
 app.use("/", express.static('./node_modules/bootstrap/dist/'));
 app.set('layout', './layouts/main');
+
 app.use('/', require('../servers/routes/main'));
 app.use('/', require('../servers/routes/post'));
 
@@ -23,6 +35,7 @@ app.use((req, res, next) => {
     res.header('Expires', '-1');
     next();     
 });
+
      
 app.set('view engine', 'ejs');
  
@@ -35,6 +48,7 @@ app.get('/', function (req, res) {
 })
 
 connectDB();
+
 
 
 app.listen(PORT, () => {

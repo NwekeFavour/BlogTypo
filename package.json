@@ -1,14 +1,13 @@
 {
   "name": "dbs",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "api/app.js",
   "engines": {
     "node": "20.x"
   },
   "scripts": {
-    "test": "node app",
-    "build": "echo 'No build step required",
-    "dev": "nodemon app.js"
+    "start": "node api/app.js",
+    "dev": "nodemon api/app.js"
   },
   "keywords": [],
   "author": "",
