@@ -4,12 +4,8 @@ const Schema = mongoose.Schema;
 const Data = new Schema({
     image: {
         data: Buffer,
-        contentType: String
+        contentType: String,
     },
-    // imageType: {
-    //     type: String,
-    //     required: true
-    // },
     title: {
         type: String,
         required: true
@@ -17,6 +13,14 @@ const Data = new Schema({
     description: {
         type: String,
         required: true
+    },
+    optionalimage: {
+        data: Buffer,
+        contentType: String
+    },
+    secoptionalimage: {
+        data: Buffer,
+        contentType: String
     },
     createdAt: {
         type: Date,
@@ -27,6 +31,8 @@ const Data = new Schema({
         default: Date.now
     }
 })
+
+
 
 module.exports = mongoose.model('post', Data)
 

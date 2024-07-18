@@ -11,12 +11,11 @@ const jwtSecret = process.env.JWTSECRET;
 
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token;
-
-    if (!token) {
-         const text = {
+    const text = {
         title: "login"
-    }
-    res.render('admin/login', {layout: 'layouts/main', text} );
+    }        
+    if (!token) {
+    res.render('admin/login', {layout: 'layouts/main', text});
     }
 
     try {
@@ -25,7 +24,7 @@ const authenticateToken = (req, res, next) => {
         next(); // Move to the next middleware or route handler
     } catch (error) {
         console.error('Token verification error:', error);
-        res.render('admin/login', {layout: 'layouts/main', text} );
+        res.render('admin/login', {layout: 'layouts/main'} );
     }
 };
 

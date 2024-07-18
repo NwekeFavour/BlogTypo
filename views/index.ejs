@@ -2,35 +2,21 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-    <div class="Hero d-lg-flex container">
-        <div>
-            
-        </div>
-        <div id="carouselExampleAutoplaying"class="carousel py-lg-3 slide w-50 mx-auto py-5" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item heroImg active" data-bs-interval="4000">
-                    <img src="/images/Home/LLona.jpg"  class="d-block w-75 mx-auto" alt="...">
-                </div>
-                <div class="carousel-item heroImg" data-bs-interval="4000">
-                    <img src="/images/Home/llona2.jpg" class="d-block w-75 mx-auto" alt="...">
-                </div>
-                <div class="carousel-item heroImg" data-bs-interval="4000">
-                    <img src="/images/Home/slawn.jpg" class="d-block w-75 mx-auto" alt="...">
-                </div>
-            </div>
+    <div class="Hero d-flex align-items-center justify-content-center container">
+        <div class=" text-black fw-bold">
+            <p class="text-uppercase head m-0 mb-5">shfl</p>
         </div>
     </div>
     <div class="text-center">
         <h1 class=" shfl m-0"><%= text.shfl %></h1>
         <div class="border-bottom  art my-2 w-50 mx-auto">
-            <p class="m-0 m-lg-2 fs-3 ">Your Home for art, cultural events and fashion on a shuffle</p>
+            <p class="m-0 m-lg-2 fs-3 text-light ">Your Home for art, cultural events and fashion on a shuffle</p>
         </div>
     </div>
-    <div class="container   gap-5 my-lg-4">
+    <div class="container text-light  gap-5 my-lg-4">
         <div class="row gap-5 justify-content-center">
             <div class="shuffle text-dark col-lg-6 col-6">
                 <!-- <img src="/images/Home/SHUFFLE.jpg" width="400" height="400" alt="shflbeat"> -->
-                <h1 class="ene">ENERGY</h1>
             </div>
             <div class=" shuffle_dave my-lg-5  col-lg-6 col-6">
                 <div class="trending ">
@@ -41,29 +27,62 @@
                         <p class="">Discover the hidden techniques that elevate your artistry: Expert tips to enhance your creative journey.
                         </p>
                     </div>
-                    <div class="d-flex align-items-center gap-4">
+                    <div class="d-flex align-items-center gap-3">
                         <div class="">
-                            <a class="text-dark fs-4 text-decoration-none" href="">See all</a>
+                            <a class="text-light fs-4 text-decoration-none" >See all</a>
                         </div>
-                        <div class="d-flex arrow align-items-center">
-                            <i class=" fs-4 fas fa-arrow-right-long"></i>
-                        </div>
+                        <a class="d-flex arrow align-items-center text-light text-decoration-none" href="/blog">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-arrow-right"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card my-lg-4 text-center my-2 border-0">
-        <div class="d-flex align-items-center LLonaSpotify justify-content-center">
-            <a href="https://open.spotify.com/playlist/6eqEDyhg8vDzTWCFHLfnR5?si=I2xbK_AmQ-63EjmzmrYzoA&pi=e-TCHb-g2KRKWw">
-                <img src="/images/Home/mainllona.webp" width="400" height="300" alt="LLonaSpotify">
-            </a>
-        </div>
-        <div class="card-body">
-            <div>
-                <h2>SHFL playlist</h2>
+    <div class="card my-lg-4 text-center my-2 border-0 bg-transparent">
+        <% spotify.forEach(item=> { %>
+            <div class="d-flex my-lg-0 my-3 align-items-center LLonaSpotify justify-content-center">
+                <a href="<%= item.link %>">
+                    <img src="data:<%= item.image.contentType %>;base64,<%= item.image.data %>" width="600" height="550"
+                        alt="LLonaSpotify">
+                </a>
+            </div>
+            <div class="card-body ">
+                <div class="text-light">
+                    <h2 class="text-light-emphasis fw-semibold text-capitalize fs-4">
+                        <%= item.playlistname %>
+                    </h2>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+    <div class="d-lg-flex align-items-center justify-content-between">
+    <% post.forEach(posts=> { %>
+        <div class="m-lg-3">
+            <div class="d-lg-flex d-none align-items-center justify-content-center">
+                <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>"
+                    class="" width="300" height="300" />
+            </div>
+            <h3 class="post-title fw-bolder fs-5 text-light-emphasis text-uppercase my-2 text-center ">
+                <%= posts.title %>
+            </h3>
+            <div class="text-wrap text-light">
+                <p class=" post-meta">
+                    <time datetime="2024-06-25">
+                        <%= posts.createdAt %>
+                    </time>
+                </p>
+                <div class="d-lg-none d-flex align-items-center justify-content-center">
+                    <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>"
+                        class="" width="320" height="300" />
+                </div>6092818532 
             </div>
         </div>
+        <% }) %>
     </div>
     <div class="bg-black">
         <div class="container mx-auto">
@@ -84,3 +103,19 @@
         </div>
     </div>
 </body>
+
+
+
+<!-- <div id="carouselExampleAutoplaying" class="carousel py-lg-3 slide w-50 mx-auto py-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item heroImg active" data-bs-interval="4000">
+            <img src="/images/Home/LLona.jpg" class="d-block w-75 mx-auto" alt="...">
+        </div>
+        <div class="carousel-item heroImg" data-bs-interval="4000">
+            <img src="/images/Home/llona2.jpg" class="d-block w-75 mx-auto" alt="...">
+        </div>
+        <div class="carousel-item heroImg" data-bs-interval="4000">
+            <img src="/images/Home/slawn.jpg" class="d-block w-75 mx-auto" alt="...">
+        </div>
+    </div>
+</div> -->

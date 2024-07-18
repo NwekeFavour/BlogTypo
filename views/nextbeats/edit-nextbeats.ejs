@@ -1,0 +1,43 @@
+<div class="w-50 mx-auto">
+    <form id="uploadForm" action="/nextbeats/<%= nextb._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="PostcoverImage" class="form-label text-light  fs-4">Add Cover</label>
+            <input type="file" class="bg-light text-dark form-control" name="coverimage" accept="image/*" id="PostImage"
+                aria-describedby="ImageUrl">
+        </div>
+        <div class="mb-3">
+            <label for="PostImage" class="form-label text-light  fs-4">Artist Image</label>
+            <input type="file" class="bg-light text-dark form-control" name="image" accept="image/*" id="PostImage"
+                aria-describedby="ImageUrl" >
+        </div>
+        <div>
+            <label for="title" class="form-label text-light fs-4 text-capitalize">title</label>
+            <input type="text" class="bg-light text-dark form-control" name="title" id="title" aria-describedby="title" value="<%= nextb.title %>">
+        </div>
+        <div class="d-lg-flex align-items-center gap-4">
+            <div>
+                <label for="Postrefname" class="form-label text-light fs-4">Reference</label>
+                <input type="text" class="bg-light text-dark form-control" name="ref" id="ref" aria-describedby="ref" value="<%= nextb.ref %>">
+            </div>
+            <div class="">
+                <label for="PostRef" class="form-label text-light fs-4">Reference Link</label>
+                <input type="text" class="bg-light text-dark form-control" name="link" id="ref-link" aria-describedby="PostRef"
+                     value="<%= nextb.link %>">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="PostName" class="form-label text-light fs-4">Artist name</label>
+            <input type="text" class="bg-light text-dark form-control" name="name" id="ArtistName" aria-describedby="ArtistName"
+                 value="<%= nextb.name%>">
+            <div id="AboutArtist" class="form-text text-light fs-4">About Artist</div>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="bg-light text-dark form-control textarea overflow-hidden" placeholder="About Artist" name="about"
+                id="floatingTextarea" ><%= nextb.about %></textarea>
+        </div>
+        <div class="d-flex align-items-center justify-content-center my-4">
+            <button class="btn w-25 btn-outline-success">Update <span class="d-md-block d-none text-capitalize">nextbeats</span></button>
+        </div>
+        <div id="message" class="text-danger"></div>
+    </form>
+</div>

@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Noto Sans Anatolian Hieroglyphs';    src: url('/fonts/NotoSansAnatolianHieroglyphs-Regular.woff2') format('woff2'),
+        url('/fonts/NotoSansAnatolianHieroglyphs-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#PostOptionalImage{
+    width: 33% !important;
+}
+
+body{
+    font-family: 'Noto Sans Anatolian Hieroglyphs' !important;
+}
+
 .list-unstyled li a{
     color: #292929;
 }
@@ -6,11 +21,76 @@
     display: block !important;
 }
 
+.shuffle-text {
+    background: linear-gradient(45deg,
+            #ff0000,
+            /* Red */
+            #ff7f00,
+            /* Orange */
+            #ffff00,
+            /* Yellow */
+            #7fff00,
+            /* Green */
+            #00ff00,
+            /* Bright Green */
+            #00ff7f,
+            /* Greenish Cyan */
+            #00ffff,
+            /* Cyan */
+            #007fff,
+            /* Blue */
+            #0000ff,
+            /* Deep Blue */
+            #7f00ff,
+            /* Purple */
+            #ff00ff,
+            /* Magenta */
+            #ff007f
+            /* Reddish Magenta */
+        );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shuffle 10s ease infinite;
+}
+
+.textarea {
+    height: 200px !important;
+}
+
+.tr, tr{
+    border-width: inherit !important;
+}
+
+@keyframes shuffle {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 
 .navigate{
-    background-color: #944117 !important;
+    background-color: #000 !important;
 }
 
 .Post{
     right: 20px !important;
+}
+
+
+@media screen and (max-width: 768px) {
+#PostOptionalImage {
+        width: 100% !important;
+    }
+    .nextb{
+        font-size: 15px !important;
+    }
 }

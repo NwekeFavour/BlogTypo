@@ -1,0 +1,30 @@
+<!-- if adimin doesn't have post what should happen -->
+<div>
+    <div class="text-center text-light my-lg-4 my-3">
+        <h1>nextbeats</h1>
+    </div>
+    <div class="container-lg p-0 m-2 mx-auto  mx-3">
+        <div class="row row.cols-1 row-cols-lg-3 align-items-center justify-content-center mx-lg-0 mx-3  g-2">
+            <% nextb.forEach(nextB => { %>
+                <div
+                    class="col-lg-6 posts border border-1 border-light-subtle rounded-top-4 p-lg-2 p-3 m-lg-1  col-md-7 my-4">
+                    <div class="card bg-transparent  border-0">
+                        <div class="image-container">
+                            <img src="data:<%= nextB.image.contentType %>;base64,<%= nextB.image.data %>"
+                                alt="<%= nextB.title %>" class="card-img-top rounded-top-4 " width="300" height="300">
+                        </div>
+                        <div class="card-body text-white-50 p-0 my-lg-3 text-capitalize">
+                            <h5 class="card-title fw-bold">
+                                <%= nextB.name%>
+                            </h5>
+                            <a class="text-decoration-none text-light descript" href="/blog/<%= nextB._id%>">
+                                <p class="card-text">
+                                    <%= nextB.about %>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>

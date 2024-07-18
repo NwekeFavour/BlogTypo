@@ -1,0 +1,26 @@
+
+<div id="">
+    <div class="w-50 mx-auto my-lg-4 my-3">
+        <form id="profilesForm" action="/nextbeats-post" method="POST" enctype="multipart/form-data">
+            <div id="profilesContainer">
+                <div class="mb-3">
+                    <label for="PostcoverImage" class="form-label text-light  fs-4">Add Cover</label>
+                    <input type="file" class="bg-light text-dark form-control" name="coverimage" accept="image/*" id="coverimage"
+                        aria-describedby="ImageUrl" required>
+                </div>
+                <div>
+                    <label for="title" class="form-label text-light fs-4 text-capitalize">title</label>
+                    <input type="text" class="bg-light text-dark form-control" name="title" id="title" aria-describedby="title"
+                        required>
+                </div>
+            </div>
+            <div class="d-flex gap-2 align-items-center justify-content-center my-4">
+                <button type="button" id="add-profile" class="btn btn-outline-success">Add Profile</button>
+                <button class="btn w-25 btn-outline-success text-light">Upload</button>
+            </div>
+            <div id="message" class="text-danger"></div>
+        </form>
+    </div>
+</div>
+
+<script src="/js/nextb.js"></script>

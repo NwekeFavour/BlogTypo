@@ -1,7 +1,8 @@
 require('dotenv').config();
-const { URL } = require('whatwg-url');
+// const { URL } = require('whatwg-url');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override')
 const connectDB = require('./servers/config/db');
 const app = express();
 const cookieParser = require('cookie-parser')
@@ -12,12 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 app.use(express.static('public'));
-
-
+// for the update put request to override the method to upload route
+app.use(methodOverride('_method'));
 
 app.use((req, res, next) => {
-    res.header('Content-Security-Policy', "default-src 'self'; script-src 'self' https://vercel.live");
+    // res.header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://fonts.googleapis.com;")
+    // res.header('Content-Security-Policy', "default-src 'self'; style-src-elem 'self' https://fonts.googleapis.com;")
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Content-Security-Policy', "default-src 'self'; img-src 'self' data:;");
     res.header('Pragma', 'no-cache');
     res.header('Expires', '-1');
     next();
@@ -40,7 +43,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
  
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
   
 
 app.get('/', function (req, res) {

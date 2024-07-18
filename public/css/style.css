@@ -1,18 +1,104 @@
+@font-face {
+    font-family: 'Noto Sans Anatolian Hieroglyphs';
+    src: url('/fonts/NotoSansAnatolianHieroglyphs-Regular.woff2') format('woff2'),
+        url('/fonts/NotoSansAnatolianHieroglyphs-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 :root{
     --bg-color: #c8c4c4;
     --header-bg-color: #FFFFFF;
     --link-styles: none;
     --color: #000;
     --opacity-header: 100%;
+    --bg-background: #19191a;
 }
 
 body{
-    font-family: "Noto Traditional Nushu", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
+    font-family: "Noto Sans Anatolian Hieroglyphs", sans-serif !important;
+    font-weight: 400;
+    font-style: normal;
+    background-color: var(--color) !important;
+}
+
+.head{
+    font-family: "Noto Sans Anatolian Hieroglyphs", sans-serif;
     font-style: normal;
 }
 
+.descript:hover{
+    color: #969393 !important;
+}
+
+.bg-service{
+    background-color: var(--bg-background);
+}
+
+
+.shuffle-text {
+    background: linear-gradient(45deg,
+            #ff0000,
+            /* Red */
+            #ff7f00,
+            /* Orange */
+            #ffff00,
+            /* Yellow */
+            #7fff00,
+            /* Green */
+            #00ff00,
+            /* Bright Green */
+            #00ff7f,
+            /* Greenish Cyan */
+            #00ffff,
+            /* Cyan */
+            #007fff,
+            /* Blue */
+            #0000ff,
+            /* Deep Blue */
+            #7f00ff,
+            /* Purple */
+            #ff00ff,
+            /* Magenta */
+            #ff007f
+            /* Reddish Magenta */
+        );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shuffle 10s ease infinite;
+}
+
+.head{
+    animation: shfl 0.4s ease infinite;
+}
+
+@keyframes shfl {
+    0%{
+        opacity: 100%;
+    }
+    50%{
+        opacity: 70%;
+    }
+    100%{
+        opacity: 60%;
+    }
+}
+
+@keyframes shuffle {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
 
 /* .link{
     margin-right: 50px !important;
@@ -33,8 +119,22 @@ body{
      transform: scaleY(-6deg);
      position: relative;
      clip-path: polygon(0 0, 100% 0, 100% 70%, 0 85%);
-     height: 650px;
-     background-color: var(--color);
+     height: 500px;
+     background-color: var(--header-bg-color);
+ }
+
+
+ 
+ .form-floating>.form-control-plaintext~label::after,
+ .form-floating>.form-control:focus~label::after,
+ .form-floating>.form-control:not(:placeholder-shown)~label::after,
+ .form-floating>.form-select~label::after {
+     background-color: transparent !important;
+ }
+
+ .image-container:hover{
+    background-color: black;
+    opacity: 70%;
  }
 
  .Hero::after {
@@ -98,11 +198,22 @@ body{
     font-size: 17px;
   }
 
+.post-meta{
+    font-size: 14px;
+    font-style: oblique;
+}
+
+.post-content{
+    text-align: justify !important;
+}
 
  @media screen and (max-width:992px) {
     .Hero{
-        height: 600px;
+        height: 480px;
     }
+    .post-meta{
+        font-size: 15px;
+        font-style: oblique;    }
     .Hero #carouselExampleAutoplaying{ 
         width: 337px !important;
         display: flex;
@@ -139,7 +250,21 @@ body{
     height: 280px ;
  }
 
+  .Hero div {
+      margin-bottom: 150px !important;
+  }
 
+ .Hero div p {
+     font-size: 120px;
+     line-height: 50px;
+     letter-spacing: 10px;
+     font-weight: bolder;
+     margin: 0 !important;
+ }
+
+ .post-content{
+    padding: 30px;
+ }
 
 }
 
@@ -163,11 +288,33 @@ body{
 
  @media screen and (min-width: 1024px) {
     .navbar-nav {
-            width: 300px !important;
+            width: 400px !important;
             margin: 0 auto !important;
         }
         .headline img{
             width: 170px;
             height: 130px;
         }
+
+    .posts{
+        width: 370px !important;
+    }
+    .Hero div{
+        margin-bottom: 100px  !important;
+    }
+
+    .Hero div p{
+        font-size: 200px;
+        line-height: 50px;
+        letter-spacing: 50px;
+        font-family: "Noto Sans Anatolian Hieroglyphs", sans-serif;
+        font-style: normal;
+        font-weight: bolder;
+    }
+
+    .post-content{
+        padding-top: 50px;
+        padding-left: 100px;
+        padding-right: 100px;    
+    }
  }

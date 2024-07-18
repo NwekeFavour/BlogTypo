@@ -3,6 +3,10 @@ const router = express.Router();
 const bcrypt = require('bcrypt')
 const User = require('../models/admin')
 const jwt = require('jsonwebtoken');
+const authenticateToken = require('./auth');
+const playlist = require('../models/playlist');
+const Blog = require('../models/post') 
+// const authenticateToken = require('./auth');
 // const Post = require('../models/post');
 
 
@@ -10,23 +14,57 @@ const jwt = require('jsonwebtoken');
 
 const jwtSecret = process.env.JWTSECRET;
 
+ 
 
 
+router.get('/', async (req, res) => {
+    try {
+        const text = {
+            title: "Home",
+            shfl: "What's On Shfl?"
+        }
+        let perPage = 1
+        let page = req.query.page || 1;
+        
+        const spotify = await playlist.aggregate([{ $sort: { createdAt: -1 } }])
+        
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .exec();
+        
+            
+        let perPost = 3
+        let Postpage = req.query.page || 1;
 
-router.get('/', (req, res) => {
-    const text = {
-        title: "Home",
-        shfl: "What's On Shfl?"
+        const post = await Blog.aggregate([{ $sort: { createdAt: -1 } }])
+        
+        .skip(perPost * Postpage - perPost)
+        .limit(perPost)
+        .exec();
+
+        res.render('index', {layout: 'layouts/main', text, spotify, post})
+    } catch (error) {
+        console.log(error)
     }
-    res.render('index', {layout: 'layouts/main', text})
+
 })
 
-router.get('/home', (req, res) => {
+router.get('/home', authenticateToken, async (req, res) => {
     const text = {
         title: "Home",
         shfl: "What's On Shfl?"
     }
-    res.render('index2', {layout: 'layouts/home', text})
+
+    let perPage = 1
+        let page = req.query.page || 1;
+        
+        const spotify = await playlist.aggregate([{ $sort: { createdAt: -1 } }])
+        
+        .skip(perPage * page - perPage)
+        .limit(perPage)
+        .exec();
+        
+    res.render('index2', {layout: 'layouts/home', text, spotify})
 })
  
 router.get('/login', (req, res) => {
@@ -65,8 +103,6 @@ router.post('/register',  async (req, res) => {
     } catch (e) {
         console.error(e);
     }
-
-    // res.render('admin/register');
 })
 
 // login post
@@ -76,6 +112,7 @@ router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
 
+        
         // Test for user existence
         const user = await User.findOne({ username });
         
@@ -88,9 +125,7 @@ router.post('/login', async (req, res) => {
         // Compare the entered password with the stored hashed password
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordValid) {
-            // const name = document.getElementById("errorMessage").innerHTML = "Incorrect Credentials"
-            // return name;
+        if (!isPasswordValid) {        
             return res.status(401).json({ message: 'Invalid Credentials' });
 
         }
@@ -99,9 +134,10 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ userID: user._id }, jwtSecret, {expiresIn: '1h'});
         res.cookie('token', token, { httpOnly: true });
 
+
+        
         // Redirect to home page
-        // res.redirect('/dashboard')
-        res.status(200).json({messsage: "login successfully", redirectUrl: '/home'})
+        res.status(200).json({ success: true, redirectUrl: '/dashboard' });
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: 'An error occurred' });
