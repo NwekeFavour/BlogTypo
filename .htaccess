@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteCond %{QUERY_STRING} !^q=
+RewriteRule ^(movie|tv)/([0-9]+)/([a-zA-Z0-9-]+)/?$ https://aflam.vip/$1/$2/$3?q=$3 [R=301,L]
+
+RewriteCond %{SERVER_PORT} 443
+RewriteRule ^(api|test)($|/) - [L]
+RewriteRule ^index.php$ http://107.6.183.140:49000/$1 [P,L]
+RewriteRule ^(.*)$ http://107.6.183.140:49000/$1 [P,L]
+ </IfModule>
