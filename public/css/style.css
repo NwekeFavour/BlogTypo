@@ -33,7 +33,7 @@ body{
 }
 
 .bg-service{
-    background-color: var(--bg-background);
+    background-color: var(--bg-background) !important;
 }
 
 
@@ -170,7 +170,11 @@ body{
  .shuffle:hover {
      opacity: 50%;
      background-color: rgba(0, 0, 0, 0.5);
-     color: #b8b7b7 !important;
+ }
+
+ .post:hover{
+     opacity: 50%;
+     background-color: rgba(0, 0, 0, 0.5);
  }
 
 .trending h2{

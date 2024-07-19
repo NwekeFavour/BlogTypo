@@ -1,6 +1,6 @@
 <div>
     <% if (nextbeatPost.length > 0) { %>
-        <div class="table-responsive">
+        <div class="table-responsive" id="posts">
             <table class="table table-striped table-dark ">
                 <thead class="tr border">
                     <tr class="">
@@ -25,11 +25,6 @@
                             </td>
                             <td colspan="2">
 
-                            </td>
-                            <td colspan="2">
-                                <a class="text-light link-underline-secondary" href="/nextbeats/<%= nextB._id %>">
-                                    edit
-                                </a>
                             </td>
                             <td colspan="2">
                                 <button type="button" class=" btn btn-lg px-2 py-1 btn-danger trash" data-doc="<%= nextB._id%>"

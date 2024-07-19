@@ -7,7 +7,6 @@ const fs = require('fs');
 const authenticateToken = require('./auth');
 const User = require('../models/admin');
 const { title } = require('process');
-const NextB = require('../models/nextGen');
 const playlist = require('../models/playlist');
 const Nextbeats = require('../models/nextGen');
 // const upload = multer({ dest: '/uploads'})
@@ -250,19 +249,22 @@ router.put('/update/:id', (req, res) => {
         }
     });
 });
-
 router.delete('/blog/:id', async (req, res) => {
-    const id = req.params.id
-    Post.findByIdAndDelete(id)
-    .then((result) => {
-        res.json({redirect: '/dashboard'});
-    }).catch((err) => {
-        console.log(err);
-    });
-})
+    const id = req.params.id;
+    try {
+        const result = await Post.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+        res.status(200).json({ redirect: '/dashboard' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 
-router.get('/nextbeats/upload', (req, res) => {
+router.get('/nextbeats/upload', authenticateToken, (req, res) => {
     const text = {
         title: "nextbeats-upload"
     }
@@ -305,7 +307,7 @@ router.get('/nextbeats', async (req, res) => {
         title: "nextbeats"
     }
     try {
-        const nextb = await NextB.find();
+        const nextb = await Nextbeats.find({});
         res.render('nextbeats/nextb', {nextb, text, layout: 'layouts/main'});
     }
     catch (error) {
@@ -326,9 +328,6 @@ const nextbeats = multer({
 })
 
 router.post('/nextbeats-post', nextbeats.fields([{ name: 'profileimage', maxCount: 8 }, { name: 'coverimage', maxCount: 1 }]), async (req, res) => {
-    console.log('Request Body:', req.body);
-    console.log('Request Files:', req.files);
-
     try {
         const profiles = JSON.parse(req.body.profiles); // Assuming profiles is a JSON string
         const { title } = req.body;
@@ -363,7 +362,7 @@ router.post('/nextbeats-post', nextbeats.fields([{ name: 'profileimage', maxCoun
         });
 
         await monthlyProfiles.save();
-
+        res.redirect('/nextbeats/dashboard')
         res.status(200).json({ message: 'Profiles added successfully' });
     } catch (error) {
         console.error('Error while saving profiles:', error);
@@ -371,157 +370,20 @@ router.post('/nextbeats-post', nextbeats.fields([{ name: 'profileimage', maxCoun
     }
 });
 
+router.delete('/nextbeats/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const result = await Nextbeats.findByIdAndDelete(id);
+        if (!result) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+        res.status(200).json({ redirect: '/dashboard' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
-
-// router.post('/nextbeats-post', nextbeats.fields([{ name: 'profileimage', maxCount: 8 }, { name: 'coverimage', maxCount: 1 }]), async (req, res) => {
-//     console.log('Request Body:', req.body);
-//     console.log('Request Files:', req.files);
-
-//     try {
-
-
-//         const profiles = JSON.parse(req.body.profiles); // Assuming profiles is a JSON string
-//         const { title } = req.body
-        
-//         const coverimage = {
-//             data: fs.readFileSync(path.join(__dirname, 'nextbeats', req.files['coverimage'][0].filename)),
-//             contentType: req.files['coverimage'][0].mimetype
-//         };
-
-//         const artists = profiles.map((profile, index) => {
-//             const profileimage = {
-//                 data: fs.readFileSync(path.join(__dirname, 'nextbeats', req.files['profileimage'][index].filename)),
-//                 contentType: req.files['profileimage'][index].mimetype
-//             };
-
-//             return new NextB({
-//                 title,
-//                 coverimage,
-//                 profileimage,
-//                 name: profile.name,
-//                 ref: profile.ref,
-//                 link: profile.link,
-//                 about: profile.about
-//             });
-//         });
-
-//          const now = new Date();
-//         const month = now.toLocaleString('default', { month: 'long' });
-//         const year = now.getFullYear();
-
-//         let monthlyProfiles = await Nextbeats.findOne({ month, year });
-
-//         if (monthlyProfiles) {
-//             // Add profiles to the existing document
-//             monthlyProfiles.profiles.push(...profileDocs);
-//         } else {
-//             // Create a new document for the current month
-//             monthlyProfiles = new Nextbeats({
-//                 month,
-//                 year,
-//                 profiles: artists
-//             });
-//         }
-
-//         await monthlyProfiles.save();
-
-        
-
-
-//         // await NextB.insertMany(artists);
-
-
-//         res.status(200).json({ message: 'Profiles added successfully' });
-//     } catch (error) {
-//         console.error('Error while saving profiles:', error);
-//         res.status(500).json({ message: 'An error occurred while saving the profiles', error: error.message });
-//     }
-// });
-
-// router.get('/nextbeats/:id', async (req, res) => {
-//     try {
-       
-//      const text = {
-//         title: "nextbeats-update"
-//        }
-//        const nextb = await NextB.findOne({ _id: req.params.id})
-//        res.render('nextbeats/edit-nextbeats',
-//            {
-//                nextb,
-//                text,
-//                layout: "layouts/admin"
-//            })
-//    } catch (err) {
-//     console.error(err)
-//    }
-    
-// })
-
-// const nextbupdateStorage = multer.diskStorage({
-//     destination: './servers/routes/nextbeats/',
-//     filename: function (req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//     }
-// });
-
-// const nextbeatupdate = multer({
-//     storage: nextbupdateStorage,
-//     limits: { fileSize: 2000000 } // 2MB file size limit
-// }).fields([
-//     { name : 'image', maxCount: 1},
-//     { name : 'coverimage', maxCount: 1}
-// ]);
-
-// router.put('/nextbeats/:id', (req, res) => {
-//     nextbeatupdate(req, res, async (err) => {
-//         if (err) {
-//             return res.status(400).json({ message: 'File update error', error: err.message });
-//         }
-//         try {
-//             const id = req.params.id;
-//             const { title, name, ref, link, about } = req.body;
-
-//             const updatednextB = {
-//                 title,
-//                 name,
-//                 ref,
-//                 link,
-//                 about
-//             };
-
-//             if (req.files) {
-//                 const image = {
-//                     data: fs.readFileSync(path.join(__dirname, 'nextbeats', req.files.image[0].filename)).toString('base64'),
-//                     contentType: req.files.image[0].mimetype
-//                 }
-//                     updatednextB.image = image
-//             } else {
-//                 console.log('No file uploaded');
-//             }
-
-//             if (req.files) {
-//                 const coverimage = {
-//                     data: fs.readFileSync(path.join(__dirname, 'nextbeats', req.files.coverimage[0].filename)).toString('base64'),
-//                     contentType: req.files.coverimage[0].mimetype
-//                 }
-//                     updatednextB.coverimage = coverimage
-//             } else {
-//                 console.log('No file uploaded');
-//             }
-
-//             const nextb = await NextB.findByIdAndUpdate(id, updatednextB, { new: true });
-
-//             if (!nextb) {
-//                 return res.status(404).send('Post not found');
-//             }
-
-//             res.redirect('/nextbeats/dashboard');
-//         } catch (error) {
-//             console.error('Error while updating nextbeat:', error);
-//             res.status(500).json({ message: 'An error occurred while updating the post', error: error.message });
-//         }
-//     });
-// });
 
 
 router.get('/playlist', (req, res) => {

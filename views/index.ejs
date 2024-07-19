@@ -60,31 +60,30 @@
             </div>
             <% }) %>
     </div>
-    <div class="d-lg-flex align-items-center justify-content-between">
-    <% post.forEach(posts=> { %>
-        <div class="m-lg-3">
-            <div class="d-lg-flex d-none align-items-center justify-content-center">
-                <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>"
-                    class="" width="300" height="300" />
-            </div>
-            <h3 class="post-title fw-bolder fs-5 text-light-emphasis text-uppercase my-2 text-center ">
-                <%= posts.title %>
-            </h3>
-            <div class="text-wrap text-light">
-                <p class=" post-meta">
-                    <time datetime="2024-06-25">
-                        <%= posts.createdAt %>
-                    </time>
-                </p>
-                <div class="d-lg-none d-flex align-items-center justify-content-center">
-                    <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>"
-                        class="" width="320" height="300" />
-                </div>6092818532 
-            </div>
+   <div class="container">
+        <div class="row">
+            <% post.forEach(posts=> { %>
+                <div class="col-lg-4 col-12 mx-auto">
+                    <a href="/blog/<%= posts._id%>" class="post text-decoration-none d-lg-block d-flex align-items-center justify-content-center">
+                        <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>" class=""
+                            width="300" height="300" />
+                    </a>
+                    <div>
+                        <h3 class="post-title fw-bolder fs-5 text-light-emphasis text-uppercase my-2 text-lg-start text-center ">
+                            <%= posts.title %>
+                        </h3>
+                    </div>
+                    <div>
+                        <p class="m-0"><%= posts.description.substring(0,140) + "..." %>  
+                            <a class="text-light" href="/blog/<%= posts._id%>"> read more</a>
+                        </p>
+                    </div>
+                </div>
+            <% }) %>
         </div>
-        <% }) %>
+   </div>
     </div>
-    <div class="bg-black">
+    <div class="bg-black bg-service">
         <div class="container mx-auto">
             <div class="row">
                 <div class=" Pr col-lg-6">

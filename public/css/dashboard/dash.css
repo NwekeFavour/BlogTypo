@@ -93,4 +93,14 @@ body{
     .nextb{
         font-size: 15px !important;
     }
+
+    #profilesContainer{
+        width: 100% !important;
+        margin: 0 auto;
+    }
+    #coverimage{
+       display: flex;
+       align-items: center;
+       justify-content: center;
+    }
 }
