@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const helmet = require('helmet')
 
-
+app.use(helmet())
 app.use(cookieParser());
 
 app.use(express.json());
