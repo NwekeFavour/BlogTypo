@@ -7,6 +7,7 @@ const connectDB = require('./servers/config/db');
 const app = express();
 const cookieParser = require('cookie-parser')
 const path = require('path')
+const helmet = require('helmet')
 
 app.use(cookieParser());
 
@@ -27,7 +28,17 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", express.static('./node_modules/bootstrap/dist/'));
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      styleSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      // Add other directives as needed
+    },
+  })
+);
+
 app.set('layout', './layouts/main');
 
 app.use('/', require('./servers/routes/main'));
