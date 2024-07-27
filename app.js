@@ -35,6 +35,7 @@ app.use(
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      imgSrc: ["'self'"], 
       // Add other directives as needed
     },
   })
