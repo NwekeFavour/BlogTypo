@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const connectDB = require('./servers/config/db');
 const app = express();
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 app.use(cookieParser());
 
@@ -45,6 +46,7 @@ app.use((err, req, res, next) => {
 });
 
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 const PORT = process.env.PORT || 3000;
 
