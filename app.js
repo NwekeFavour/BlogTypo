@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const helmet = require('helmet')
 
-app.use(helmet())
 app.use(cookieParser());
 
 app.use(express.json());
@@ -35,7 +34,6 @@ app.use(
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "https://cdn.jsdelivr.net"],
-      imgSrc: ["'self'"], 
       // Add other directives as needed
     },
   })
