@@ -48,7 +48,7 @@
             <div class="d-flex my-lg-0 my-3 align-items-center LLonaSpotify justify-content-center">
                 <a href="<%= item.link %>">
                     <img src="data:<%= item.image.contentType %>;base64,<%= item.image.data %>" width="600" height="550"
-                        alt="LLonaSpotify">
+                       class="" alt="LLonaSpotify">
                 </a>
             </div>
             <div class="card-body ">
@@ -74,7 +74,7 @@
                         </h3>
                     </div>
                     <div>
-                        <p class="m-0"><%= posts.description.substring(0,140) + "..." %>  
+                        <p class="m-0 text-light p-lg-0 p-4 pt-lg-0 pt-0 text-white"><%= posts.description.substring(0,140) + "..." %>  
                             <a class="text-light" href="/blog/<%= posts._id%>"> read more</a>
                         </p>
                     </div>

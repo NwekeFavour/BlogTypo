@@ -277,7 +277,7 @@ router.get('/nextbeats/upload', authenticateToken, (req, res) => {
 router.get('/nextbeats/dashboard', authenticateToken, async (req, res) => {
     try {
         const text = {
-            title: "Nextbeats Dashboard"
+            title: "Nextbeats-Dashboard"
         };
 
         // Fetch the latest document based on createdDate

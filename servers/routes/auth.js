@@ -17,7 +17,6 @@ const authenticateToken = (req, res, next) => {
     if (!token) {
     res.render('admin/login', {layout: 'layouts/main', text});
     }
-
     try {
         const decoded = jwt.verify(token, jwtSecret);
         req.user = decoded.userID; // Assuming you store user ID in the token payload

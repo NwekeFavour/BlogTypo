@@ -7,12 +7,12 @@
     <div class="container-lg p-0 m-2 mx-auto  mx-3">
         <div class="row row.cols-1 row-cols-lg-3 align-items-center justify-content-center mx-lg-0 mx-3  g-2">
             <% blog.forEach(posts => { %>
-                <div class="col-lg-6 posts border border-1 border-light-subtle rounded-top-4 p-lg-2 p-3 m-lg-1  col-md-7 my-4">
+                <div class="col-lg-6  posts rounded-top-4 p-lg-2 p-3 m-lg-1  col-md-7 my-4">
                     <div class="card bg-transparent  border-0">
                         <div class="image-container">
                             <img src="data:<%= posts.image.contentType %>;base64,<%= posts.image.data %>" alt="<%= posts.title %>" class="card-img-top rounded-top-4 " width="300" height="300">
                         </div>
-                        <div class="card-body text-white-50 p-0 my-lg-3 text-capitalize">
+                        <div class="card-body text-white-50 p-0 my-lg-3 my-2 text-capitalize">
                             <h5 class="card-title fw-bold">
                                 <%= posts.title %>
                             </h5>

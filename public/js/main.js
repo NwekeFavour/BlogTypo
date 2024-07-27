@@ -24,6 +24,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             }
         } catch (error) {
             console.error('An error occurred:', error);
-            document.getElementById('errorMessage').textContent = 'An error occurred';
+            document.getElementById('errorMessage').textContent = 'Wrong Credentials';
         }
 });

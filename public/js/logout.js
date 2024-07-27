@@ -38,17 +38,63 @@ document.getElementById('logoutButton').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('delete').addEventListener('click', async (e) => {
-    const Trash = document.querySelector('#delete');
+// document.getElementById('delete').addEventListener('click', async (e) => {
+//     const Trash = document.querySelector('#delete');
 
-    e.preventDefault();
-    const endpoint = `/blog/${Trash.dataset.doc}`;
+//     e.preventDefault();
+//     const endpoint = `/blog/${Trash.dataset.doc}`;
 
-    fetch(endpoint, {
-        method: 'DELETE'
-    })
-        .then((response) => response.json())
-        .then((data) => window.location.href = data.redirect)
-        .catch(err => console.log(err));
-    console.log("deleted");
+//     fetch(endpoint, {
+//         method: 'DELETE'
+//     })
+//         .then((response) => response.json())
+//         .then((data) => window.location.href = data.redirect)
+//         .catch(err => console.log(err));
+//     console.log("deleted");
+// })
+// Attach event listener to the document or a common parent element
+document.addEventListener('click', async (event) => {
+    if (event.target.closest('.trash')) {
+        const deleteButton = event.target.closest('.trash');
+        const id = deleteButton.getAttribute('data-doc');
+        const uploadModals = document.getElementById("uploadModal")
+
+                setTimeout(() => {
+                    uploadModals.classList.add("display")
+                }, 2000)
+        try {
+            const response = await fetch(`/blog/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 200) {
+                const result = await response.json();                
+
+                if (result.redirect) {
+                    window.location.href = result.redirect;
+                } else {
+                    // Optionally remove the deleted post from the DOM without redirect
+                    deleteButton.closest('.post').remove();
+                }
+            } else if (response.status === 404) {
+                alert('Post not found');
+            } else {
+                alert('Server Error');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Server Error');
+        }
+    }
+});
+
+const post = document.getElementById("post")
+const uploadModal = document.getElementById("uploadModal")
+post.addEventListener('click', function () {
+    setTimeout(() => {
+        uploadModal.classList.add("display")
+    }, 2000)
 })

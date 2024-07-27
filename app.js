@@ -38,21 +38,16 @@ app.use((req, res, next) => {
     res.header('Expires', '-1');
     next();     
 });
-
      
 app.set('view engine', 'ejs');
- 
 
 const PORT = process.env.PORT || 3000;
-  
 
 app.get('/', function (req, res) {
     res.send('Hello World');
 })
 
 connectDB();
-
-
 
 app.listen(PORT, () => {
     console.log(`server connected sucessfully : ${PORT}`);

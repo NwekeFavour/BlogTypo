@@ -9,6 +9,10 @@
     width: 33% !important;
 }
 
+tr{
+    white-space: nowrap;
+}
+
 body{
     font-family: 'Noto Sans Anatolian Hieroglyphs' !important;
 }
@@ -19,6 +23,16 @@ body{
 
 .display {
     display: block !important;
+}
+
+
+.alert{
+    position: relative !important;
+    top: 0;
+    display: none;
+}
+.text-justify{
+    text-align: justify !important;
 }
 
 .shuffle-text {
