@@ -99,6 +99,10 @@ body{
     right: 20px !important;
 }
 
+.form {
+    width: 50% !important;
+}
+
 
 
 @media screen and (max-width: 768px) {
@@ -117,5 +121,9 @@ body{
        display: flex;
        align-items: center;
        justify-content: center;
+    }
+
+    .form{
+        width: 70% !important;
     }
 }
