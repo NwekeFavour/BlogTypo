@@ -214,6 +214,10 @@ body{
     text-align: justify !important;
 }
 
+.image-container img {
+    border-radius: 1.375rem !important;
+}
+
  @media screen and (max-width:992px) {
     .Hero{
         height: 480px;

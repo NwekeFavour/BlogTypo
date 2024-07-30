@@ -43,7 +43,7 @@ const Nextbeats = require('../models/nextGen');
 
 // insertPost();
 
-router.get('/post', (req, res) => {
+router.get('/post', authenticateToken, (req, res) => {
     const text = {
         title: "upload"
     }
