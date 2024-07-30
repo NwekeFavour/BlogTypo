@@ -10,7 +10,6 @@ const path = require('path')
 const helmet = require('helmet')
 
 app.use(cookieParser());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
