@@ -9,11 +9,11 @@ const Data = new Schema({
     title: {
         type: String,
         required: true
-    },
+    },  
     description: {
         type: String,
         required: true
-    },
+    }, 
     optionalimage: {
         data: Buffer,
         contentType: String

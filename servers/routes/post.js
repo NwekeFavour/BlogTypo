@@ -9,6 +9,16 @@ const User = require('../models/admin');
 const { title } = require('process');
 const playlist = require('../models/playlist');
 const Nextbeats = require('../models/nextGen');
+// top-level await
+(async () => {
+    const { Dropbox } = require('dropbox');
+    const fetch = (await import('node-fetch')).default;
+
+    const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN, fetch });
+
+    // Your code to interact with Dropbox API
+})();
+const DropboxService = require('../services/DropBoxService')
 // const upload = multer({ dest: '/uploads'})
 
 // function insertPost() {
@@ -42,6 +52,7 @@ const Nextbeats = require('../models/nextGen');
 // }
 
 // insertPost();
+
 
 router.get('/post', authenticateToken, (req, res) => {
     const text = {
@@ -101,11 +112,25 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
             // }
 
 
+// const storage = multer.diskStorage({
+//     destination: './servers/routes/uploads/',
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//     }
+// });
+
+const uploadsDir = path.join(__dirname, '..', '/routes/uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
+
 const storage = multer.diskStorage({
-    destination: './servers/routes/uploads/',
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }    
+    destination: (req, file, cb) => {
+        cb(null, uploadsDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
 });
 
 const upload = multer({ 
@@ -117,7 +142,6 @@ const upload = multer({
 ]);
 
 router.post('/upload', (req, res) => {
-
     upload(req, res, async (err) => {
         if (err) {
             return res.status(400).json({ message: 'File upload error', error: err.message });
@@ -125,33 +149,55 @@ router.post('/upload', (req, res) => {
 
         try {
             const { title, description } = req.body;
+
             if (!req.files || !req.files.image) {
                 return res.status(400).json({ message: 'Main image is required' });
             }
 
-            const image = {
-                data: fs.readFileSync(path.join(__dirname, 'uploads', req.files.image[0].filename)).toString('base64'),
-                contentType: req.files.image[0].mimetype
-            };
+            const mainImageFilePath = path.join(uploadsDir, req.files.image[0].filename);
 
-            let optionalimage = null;
-            if (req.files.optionalimage) {
-                optionalimage = {
-                    data: fs.readFileSync(path.join(__dirname, 'uploads', req.files.optionalimage[0].filename)),
-                    contentType: req.files.optionalimage[0].mimetype
-                };
+            if (!fs.existsSync(mainImageFilePath)) {
+                return res.status(400).json({ message: 'Main image file not found' });
             }
-                
+
+            const mainImageFileContent = fs.readFileSync(mainImageFilePath);
+
+            // Upload main image to Dropbox
+            const dropboxPath = `/uploads/${req.files.image[0].filename}`;
+            const mainImageResponse = await DropboxService.uploadFile(dropboxPath, mainImageFileContent);
+
+            let optionalImageFileContent = null;
+            if (req.files.optionalimage) {
+                const optionalImageFilePath = path.join(uploadsDir, req.files.optionalimage[0].filename);
+                if (!fs.existsSync(optionalImageFilePath)) {
+                    return res.status(400).json({ message: 'Optional image file not found' });
+                }
+                optionalImageFileContent = fs.readFileSync(optionalImageFilePath);
+            }
+
             const blog = new Post({
                 title,
                 description,
-                image, 
-                optionalimage
+                image: {
+                    data: mainImageFileContent,
+                    contentType: req.files.image[0].mimetype
+                },
+                optionalimage: optionalImageFileContent ? {
+                    data: optionalImageFileContent,
+                    contentType: req.files.optionalimage[0].mimetype
+                } : null
             });
 
-            await blog.save(); 
-            res.redirect('/dashboard')
+            await blog.save();
 
+            // Clean up the temporary files
+            fs.unlinkSync(mainImageFilePath);
+            if (req.files.optionalimage) {
+                const optionalImageFilePath = path.join(uploadsDir, req.files.optionalimage[0].filename);
+                fs.unlinkSync(optionalImageFilePath);
+            }
+
+            res.redirect('/dashboard');
         } catch (error) {
             console.error('Error while saving post:', error);
             res.status(500).json({ message: 'An error occurred while saving the post', error: error.message });

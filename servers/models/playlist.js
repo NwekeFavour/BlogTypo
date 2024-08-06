@@ -10,7 +10,7 @@ const playlist = new Schema({
     playlistname: {
         type: String,
         required: true
-    },
+    }, 
     link: {
         type: String,
         required: true
